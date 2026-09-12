@@ -1,14 +1,13 @@
-# Submission 1: Nama Proyek Anda
-Nama: Erlangga Juni Saputra
-
-Username dicoding: erlanggajuni45
+# Submission 1: House Price Prediction Pipeline
+Nama: Erlangga Juni Saputra  
+Username dicoding: erlanggajuni45  
 
 | | Deskripsi |
 | ----------- | ----------- |
 | Dataset | [House Price Prediction](https://www.kaggle.com/datasets/debayank2024/house-price-prediction) |
-| Masalah | Deskripsi masalah yang di angkat |
-| Solusi machine learning | Deskripsi solusi machine learning yang akan dibuat |
-| Metode pengolahan | Deskripsi metode pengolahan data yang digunakan |
-| Arsitektur model | Deskripsi arsitektur model yang diguanakan |
-| Metrik evaluasi | Deksripsi metrik yang digunakan untuk mengevaluasi performa model |
-| Performa model | Deksripsi performa model yang dibuat |
+| Masalah | Prediksi harga properti/rumah memiliki tingkat ketidakpastian tinggi akibat variasi fitur fisik (luas tanah/bangunan, kondisi, jumlah kamar) dan heterogenitas lokasi (kota, kode pos). Diperlukan sistem machine learning terautomasi end-to-end yang menjamin validasi data otomatis, rekayasa fitur bebas *training-serving skew*, pemilihan hyperparameter optimal, serta pipeline deployment yang reliabel. |
+| Solusi machine learning | Membangun pipeline Machine Learning end-to-end menggunakan TensorFlow Extended (TFX) dengan orchestrator `InteractiveContext`. Pipeline mengintegrasikan 10 komponen terstruktur: `CsvExampleGen`, `StatisticsGen`, `SchemaGen`, `ExampleValidator`, `Transform`, `Tuner` (KerasTuner), `Trainer` (`tf_keras`), `Resolver` (`LatestBlessedModelStrategy`), `Evaluator` (TFMA), hingga `Pusher` ke TensorFlow Serving. |
+| Metode pengolahan | Rekayasa fitur dijalankan pada komponen `Transform` menggunakan TensorFlow Transform (`tft`): standarisasi z-score (`tft.scale_to_z_score`) untuk 12 fitur numerik, pembuatan indeks representasi kosakata (`tft.compute_and_apply_vocabulary`) untuk 2 fitur kategorikal (*city* dan *statezip*), serta penanganan nilai Out-of-Vocabulary (OOV) menggunakan pembatas rentang indeks (*clipping*). |
+| Arsitektur model | Arsitektur Deep Neural Network multi-input menggunakan TensorFlow Keras (`tf_keras`): layer input numerik dan input kategorikal yang dipetakan melalui layer `Embedding` (dimensi output 8), digabungkan menggunakan `Concatenate`, diteruskan ke Dense Layer 1 (aktivasi ReLU), Dropout Layer untuk regularisasi, Dense Layer 2 (aktivasi ReLU), dan diakhiri Dense Layer tunggal (aktivasi Linear) untuk prediksi nilai kontinu harga rumah. Model dikompilasi menggunakan optimizer Adam dan *loss function* MSE. |
+| Metrik evaluasi | Evaluasi performa model diuji menggunakan TensorFlow Model Analysis (TFMA) dengan metrik Mean Absolute Error (MAE) dan Mean Squared Error (MSE). Komponen `Evaluator` menerapkan validasi ambang batas (*GenericValueThreshold*) serta komparasi terhadap model baseline terdahulu melalui `LatestBlessedModelStrategy` untuk menerbitkan status validasi (*blessing*). |
+| Performa model | Hyperparameter tuning otomatis berhasil memilih kombinasi arsitektur terbaik dengan skor validasi MAE konvergen hingga kisaran ~475.516 pada epoch akhir, berhasil meraih status `BLESSED` pada komponen `Evaluator`, serta sukses memproses permintaan inferensi secara *real-time* melalui REST API Docker TensorFlow Serving. |
