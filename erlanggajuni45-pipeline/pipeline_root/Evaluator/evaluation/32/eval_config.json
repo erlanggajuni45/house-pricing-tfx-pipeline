@@ -1,0 +1,38 @@
+{
+  "evalConfig": {
+    "modelSpecs": [
+      {
+        "labelKey": "price"
+      }
+    ],
+    "slicingSpecs": [
+      {}
+    ],
+    "metricsSpecs": [
+      {
+        "metrics": [
+          {
+            "className": "MeanAbsoluteError"
+          },
+          {
+            "className": "MeanSquaredError",
+            "threshold": {
+              "valueThreshold": {
+                "upperBound": 100000000000000.0
+              }
+            }
+          }
+        ],
+        "modelNames": [
+          ""
+        ]
+      }
+    ]
+  },
+  "version": "0.47.1",
+  "dataLocation": "<user provided PCollection>",
+  "fileFormat": "<unknown>",
+  "modelLocations": {
+    "": "erlanggajuni45-pipeline/pipeline_root/Trainer/model/30/Format-Serving"
+  }
+}
