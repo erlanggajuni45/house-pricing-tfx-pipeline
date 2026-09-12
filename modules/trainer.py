@@ -1,5 +1,6 @@
 import tensorflow as tf
 import tensorflow_transform as tft
+import tf_keras as keras
 from tfx.components.trainer.fn_args_utils import FnArgs
 
 LABEL_KEY = 'price'
@@ -33,44 +34,51 @@ def _input_fn(file_pattern, tf_transform_output, batch_size=32):
     )
     return dataset
 
-def _build_keras_model(hp_dict: dict) -> tf.keras.Model:
+def _build_keras_model(hp_dict: dict) -> keras.Model:
     inputs = {}
 
     for feat in NUMERICAL_FEATURES:
-        inputs[transformed_name(feat)] = tf.keras.layers.Input(
+        inputs[transformed_name(feat)] = keras.layers.Input(
             shape=(1,), name=transformed_name(feat), dtype=tf.float32
         )
 
     for feat in CATEGORICAL_FEATURES:
-        inputs[transformed_name(feat)] = tf.keras.layers.Input(
+        inputs[transformed_name(feat)] = keras.layers.Input(
             shape=(1,), name=transformed_name(feat), dtype=tf.int64
         )
 
     cat_embeddings = []
     for feat in CATEGORICAL_FEATURES:
-        embed = tf.keras.layers.Embedding(
+        feat_input = inputs[transformed_name(feat)]
+        
+        # Mengubah indeks OOV (-1) menjadi 0 dan membatasi rentang ke [0, 149]
+        cleaned_input = keras.layers.Lambda(
+            lambda x: tf.clip_by_value(x, tf.cast(0, x.dtype), tf.cast(149, x.dtype))
+        )(feat_input)
+        
+        embed = keras.layers.Embedding(
             input_dim=150, output_dim=8
-        )(inputs[transformed_name(feat)])
-        cat_embeddings.append(tf.keras.layers.Flatten()(embed))
+        )(cleaned_input)
+        cat_embeddings.append(keras.layers.Flatten()(embed))
 
     num_layers = [inputs[transformed_name(f)] for f in NUMERICAL_FEATURES]
-    all_features = tf.keras.layers.concatenate(num_layers + cat_embeddings)
+    all_features = keras.layers.concatenate(num_layers + cat_embeddings)
 
     units_1 = hp_dict.get('units_1', 64)
     dropout_rate = hp_dict.get('dropout_rate', 0.2)
     units_2 = hp_dict.get('units_2', 32)
     learning_rate = hp_dict.get('learning_rate', 0.001)
 
-    x = tf.keras.layers.Dense(units_1, activation='relu')(all_features)
-    x = tf.keras.layers.Dropout(dropout_rate)(x)
-    x = tf.keras.layers.Dense(units_2, activation='relu')(x)
-    output = tf.keras.layers.Dense(1, activation='linear')(x)
+    x = keras.layers.Dense(units_1, activation='relu')(all_features)
+    x = keras.layers.Dropout(dropout_rate)(x)
+    x = keras.layers.Dense(units_2, activation='relu')(x)
+    output = keras.layers.Dense(1, activation='linear')(x)
 
-    model = tf.keras.Model(inputs=inputs, outputs=output)
+    model = keras.Model(inputs=inputs, outputs=output)
     model.compile(
-        optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+        optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
         loss='mean_squared_error',
-        metrics=[tf.keras.metrics.MeanAbsoluteError(name='mean_absolute_error')]
+        metrics=[keras.metrics.MeanAbsoluteError(name='mean_absolute_error')]
     )
     return model
 
@@ -113,9 +121,8 @@ def run_fn(fn_args: FnArgs):
         'serving_default': _get_serve_tf_examples_fn(model, tf_transform_output),
     }
 
-    # Gunakan tf.saved_model.save bawaan TF (bukan model.save)
-    tf.saved_model.save(
-        model,
+    model.save(
         fn_args.serving_model_dir,
+        save_format='tf',
         signatures=signatures
     )
