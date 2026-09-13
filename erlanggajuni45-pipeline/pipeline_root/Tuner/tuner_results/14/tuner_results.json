@@ -1,0 +1,1 @@
+[{"trial_id": "0", "score": 193582.59375, "units_1": 32, "dropout_rate": 0.2, "units_2": 32, "learning_rate": 0.01}, {"trial_id": "2", "score": 539994.0625, "units_1": 96, "dropout_rate": 0.30000000000000004, "units_2": 16, "learning_rate": 0.001}, {"trial_id": "1", "score": 544059.375, "units_1": 64, "dropout_rate": 0.4, "units_2": 48, "learning_rate": 0.001}]
