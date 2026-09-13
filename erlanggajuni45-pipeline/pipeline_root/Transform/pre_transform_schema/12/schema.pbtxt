@@ -1,0 +1,326 @@
+feature {
+  name: "bathrooms"
+  type: FLOAT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "bedrooms"
+  type: FLOAT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "city"
+  type: BYTES
+  domain: "city"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "condition"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "floors"
+  type: FLOAT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "price"
+  type: FLOAT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "sqft_above"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "sqft_basement"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "sqft_living"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "sqft_lot"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "statezip"
+  type: BYTES
+  domain: "statezip"
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "view"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "waterfront"
+  type: INT
+  bool_domain {
+  }
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "yr_built"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+feature {
+  name: "yr_renovated"
+  type: INT
+  presence {
+    min_fraction: 1.0
+    min_count: 1
+  }
+  shape {
+    dim {
+      size: 1
+    }
+  }
+}
+string_domain {
+  name: "city"
+  value: "Algona"
+  value: "Auburn"
+  value: "Bellevue"
+  value: "Black Diamond"
+  value: "Bothell"
+  value: "Burien"
+  value: "Carnation"
+  value: "Clyde Hill"
+  value: "Covington"
+  value: "Des Moines"
+  value: "Duvall"
+  value: "Enumclaw"
+  value: "Fall City"
+  value: "Federal Way"
+  value: "Inglewood-Finn Hill"
+  value: "Issaquah"
+  value: "Kenmore"
+  value: "Kent"
+  value: "Kirkland"
+  value: "Lake Forest Park"
+  value: "Maple Valley"
+  value: "Medina"
+  value: "Mercer Island"
+  value: "Milton"
+  value: "Newcastle"
+  value: "Normandy Park"
+  value: "North Bend"
+  value: "Pacific"
+  value: "Preston"
+  value: "Ravensdale"
+  value: "Redmond"
+  value: "Renton"
+  value: "Sammamish"
+  value: "SeaTac"
+  value: "Seattle"
+  value: "Shoreline"
+  value: "Skykomish"
+  value: "Snoqualmie"
+  value: "Snoqualmie Pass"
+  value: "Tukwila"
+  value: "Vashon"
+  value: "Woodinville"
+  value: "Yarrow Point"
+  value: "Beaux Arts Village"
+}
+string_domain {
+  name: "statezip"
+  value: "WA 98001"
+  value: "WA 98002"
+  value: "WA 98003"
+  value: "WA 98004"
+  value: "WA 98005"
+  value: "WA 98006"
+  value: "WA 98007"
+  value: "WA 98008"
+  value: "WA 98010"
+  value: "WA 98011"
+  value: "WA 98014"
+  value: "WA 98019"
+  value: "WA 98022"
+  value: "WA 98023"
+  value: "WA 98024"
+  value: "WA 98027"
+  value: "WA 98028"
+  value: "WA 98029"
+  value: "WA 98030"
+  value: "WA 98031"
+  value: "WA 98032"
+  value: "WA 98033"
+  value: "WA 98034"
+  value: "WA 98038"
+  value: "WA 98039"
+  value: "WA 98040"
+  value: "WA 98042"
+  value: "WA 98045"
+  value: "WA 98047"
+  value: "WA 98050"
+  value: "WA 98051"
+  value: "WA 98052"
+  value: "WA 98053"
+  value: "WA 98055"
+  value: "WA 98056"
+  value: "WA 98057"
+  value: "WA 98058"
+  value: "WA 98059"
+  value: "WA 98065"
+  value: "WA 98068"
+  value: "WA 98070"
+  value: "WA 98072"
+  value: "WA 98074"
+  value: "WA 98075"
+  value: "WA 98077"
+  value: "WA 98092"
+  value: "WA 98102"
+  value: "WA 98103"
+  value: "WA 98105"
+  value: "WA 98106"
+  value: "WA 98107"
+  value: "WA 98108"
+  value: "WA 98109"
+  value: "WA 98112"
+  value: "WA 98115"
+  value: "WA 98116"
+  value: "WA 98117"
+  value: "WA 98118"
+  value: "WA 98119"
+  value: "WA 98122"
+  value: "WA 98125"
+  value: "WA 98126"
+  value: "WA 98133"
+  value: "WA 98136"
+  value: "WA 98144"
+  value: "WA 98146"
+  value: "WA 98148"
+  value: "WA 98155"
+  value: "WA 98166"
+  value: "WA 98168"
+  value: "WA 98177"
+  value: "WA 98178"
+  value: "WA 98188"
+  value: "WA 98198"
+  value: "WA 98199"
+  value: "WA 98288"
+  value: "WA 98354"
+}
