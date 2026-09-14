@@ -1,6 +1,4 @@
-# Submission 1: House Price Prediction Pipeline
-Nama: Erlangga Juni Saputra  
-Username dicoding: erlanggajuni45  
+House Price Prediction Pipeline
 
 | | Deskripsi |
 | ----------- | ----------- |
